@@ -8,13 +8,13 @@ signal state_exited(state: int)
 @export var push_warnings: bool
 
 var _states: Dictionary
-var prev_state: int = -1
-var state: int:
+var _prev_state: int = -1
+var _state: int:
 	set(to):
-		var from := state
+		var from := _state
 		if _try_transition(to):
-			prev_state = from
-			state = to
+			_prev_state = from
+			_state = to
 			state_changed.emit(from, to)
 
 
@@ -35,16 +35,16 @@ func _is_valid_transition(to: int) -> bool:
 	if to < 0 or to >= _states.size():
 		push_error("State %d is out of bounds" % to)
 		return false
-	return to != state
+	return to != _state
 
 
 func _try_transition(to: int) -> bool:
 	if not _is_valid_transition(to):
-		if push_warnings and state != to:
-			push_warning("Invalid state transition from %s to %s" % [get_state_name(state), get_state_name(to)])
+		if push_warnings and _state != to:
+			push_warning("Invalid state transition from %s to %s" % [get_state_name(_state), get_state_name(to)])
 		return false
 		
-	var from := state
+	var from := _state
 	
 	if _exit(from):
 		state_exited.emit(from)
@@ -61,17 +61,17 @@ func _try_transition(to: int) -> bool:
 
 
 #region Public State Methods
-func get_state_name(state_idx: int = state) -> String:
+func get_state_name(state_idx: int = _state) -> String:
 	if state_idx >= 0 and state_idx < _states.size():
 		return _states.keys()[state_idx]
 	return ""
 
 
+func set_state(to: int) -> bool:
+	_state = to
+	return _prev_state != _state
+
+
 func start(initial_state: int = 0) -> void:
-	state = initial_state
-
-
-func transition_to(to: int) -> bool:
-	state = to
-	return prev_state != state
+	_state = initial_state
 #endregion
