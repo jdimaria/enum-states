@@ -74,4 +74,8 @@ func set_state(to: int) -> bool:
 
 func start(initial_state: int = 0) -> void:
 	_state = initial_state
+
+
+func rollback_state() -> bool:
+	return _prev_state != -1 and set_state(_prev_state)
 #endregion

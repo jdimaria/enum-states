@@ -56,8 +56,8 @@ func _is_valid_transition(to: int) -> bool:
 func _physics_process(delta: float) -> void:
 	if _state == PlayerState.BUFFERING_JUMP:
 		_jump_buffer_timer -= delta
-		if _jump_buffer_timer <= 0 and _prev_state != -1:
-			set_state(_prev_state)
+		if _jump_buffer_timer <= 0:
+			rollback_state()
 
 
 func idle() -> void:
@@ -84,11 +84,15 @@ func is_buffering_jump() -> bool:
 	return _state == PlayerState.BUFFERING_JUMP
 
 
+func is_jumping() -> bool:
+	return _state == PlayerState.JUMPING
+
+
 func get_gravity_multiplier() -> float:
 	match _state:
 		PlayerState.BUFFERING_JUMP, PlayerState.JUMPING:
 			return 1.0
 		PlayerState.FALLING:
-			return 1.5
+			return 2.0
 		_:
 			return 0.0
