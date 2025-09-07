@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxxr17gnl6r32"]
+
+[ext_resource type="Script" uid="uid://crlquao1vq67i" path="res://examples/player.gd" id="1_1pge1"]
+[ext_resource type="Texture2D" uid="uid://dh1ysbcnnfloc" path="res://icon.svg" id="1_fxcs7"]
+[ext_resource type="Script" uid="uid://bxsb7ui0lso0" path="res://examples/player_state_machine.gd" id="3_6jugn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xp1rb"]
+size = Vector2(1153, 145)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1pge1"]
+radius = 64.0
+height = 128.0
+
+[node name="PlayerControl" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(2, 511)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+offset_right = 1153.0
+offset_bottom = 145.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(575, 71)
+shape = SubResource("RectangleShape2D_xp1rb")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(575, 420)
+collision_layer = 2
+script = ExtResource("1_1pge1")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_fxcs7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_1pge1")
+
+[node name="PlayerStateMachine" type="Node" parent="CharacterBody2D"]
+script = ExtResource("3_6jugn")
+metadata/_custom_type_script = "uid://bxsb7ui0lso0"
