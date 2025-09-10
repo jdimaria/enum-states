@@ -21,7 +21,7 @@ func _enter(enter_state: int) -> bool:
 	match enter_state:
 		PlayerState.BUFFERING_JUMP:
 			_jump_buffer_timer = jump_buffer
-			return true
+			return _jump_buffer_timer != 0
 		_:
 			return true
 

@@ -61,10 +61,17 @@ func _try_transition(to: int) -> bool:
 
 
 #region Public State Methods
+func get_state() -> int: return _state
+
+
 func get_state_name(state_idx: int = _state) -> String:
 	if state_idx >= 0 and state_idx < _states.size():
 		return _states.keys()[state_idx]
 	return ""
+
+
+func is_state(state: int) -> bool:
+	return _state == state
 
 
 func set_state(to: int) -> bool:

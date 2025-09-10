@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh5pc1rjlkeph"]
+
+[ext_resource type="Script" uid="uid://enu6wuhcon0x" path="res://examples/enemy_behavior/player.gd" id="1_7of7s"]
+[ext_resource type="Texture2D" uid="uid://dh1ysbcnnfloc" path="res://icon.svg" id="1_tcgus"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gk36d"]
+radius = 63.0
+height = 126.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_7of7s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tcgus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_gk36d")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
